@@ -8,11 +8,13 @@ import { ExpensesContext } from "../store/expensesContext";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
 function ManageExpense({ route, navigation }) {
-  const { addExpense, updateExpense, deleteExpense } =
+  const { expenses, addExpense, updateExpense, deleteExpense } =
     useContext(ExpensesContext);
 
   const expenseId = route.params?.expenseId;
   const isEditing = !!expenseId; // Convert to boolean
+
+  const selectedExpense = expenses.find((expense) => expense.id === expenseId);
 
   useLayoutEffect(
     function () {
@@ -32,33 +34,19 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack();
   }
 
-  function handleConfirm() {
-    isEditing
-      ? updateExpense(expenseId, {
-          description: "Updated Expense",
-          amount: 200,
-          date: new Date(),
-        })
-      : addExpense({
-          description: "New Expense",
-          amount: 100,
-          date: new Date(2024, 7, 15),
-        });
+  function handleConfirm(expenseData) {
+    isEditing ? updateExpense(expenseId, expenseData) : addExpense(expenseData);
     navigation.goBack();
   }
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-
-      <View style={styles.buttonsContainer}>
-        <Button mode="flat" onPress={handleCancel} style={styles.button}>
-          Cancel
-        </Button>
-        <Button onPress={handleConfirm} style={styles.button}>
-          {isEditing ? "Update" : "Add"}
-        </Button>
-      </View>
+      <ExpenseForm
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        onCancel={handleCancel}
+        onSubmit={handleConfirm}
+        defaultValues={selectedExpense}
+      />
 
       {isEditing && (
         <View style={styles.deleteContainer}>
@@ -79,15 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: globalStyles.colors.primary800,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 16,
-  },
-  button: {
-    minWidth: 120,
   },
   deleteContainer: {
     marginTop: 16,
