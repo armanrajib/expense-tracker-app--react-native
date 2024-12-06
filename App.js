@@ -35,7 +35,7 @@ export default function App() {
             name="ManageExpense"
             component={ManageExpense}
             options={{
-              title: "Manage Expense",
+              // title: "Manage Expense",
               headerTitleAlign: "center",
               presentation: "modal",
             }}
