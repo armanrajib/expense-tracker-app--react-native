@@ -73,22 +73,22 @@ function ExpensesOverview() {
       })}
     >
       <BottomTab.Screen
-        name="AllExpenses"
-        component={AllExpenses}
+        name="RecentExpenses"
+        component={RecentExpenses}
         options={{
-          title: "All Expenses",
-          tabBarLabel: "All Expenses",
+          title: "Recent Expenses",
+          tabBarLabel: "Recent Expenses",
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="hourglass" size={size} color={color} />
           ),
         }}
       />
       <BottomTab.Screen
-        name="RecentExpenses"
-        component={RecentExpenses}
+        name="AllExpenses"
+        component={AllExpenses}
         options={{
-          title: "Recent Expenses",
-          tabBarLabel: "Recent Expenses",
+          title: "All Expenses",
+          tabBarLabel: "All Expenses",
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="calendar" size={size} color={color} />
           ),
